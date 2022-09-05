@@ -28,24 +28,60 @@ const App = () => {
   const [data, setData] = useState(null);
   const [location, setLocation] = useState('Tucuman');
   const [inputValue, setInputValue] = useState('');
+  const [animate, setAnimate] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('')
+
+  const handleInput = (e) => {
+    setInputValue(e.target.value)
+  }
+
+  const handleSubmit = (e) => {
+    if(inputValue) {
+      setLocation(inputValue);
+    }
+    const input = document.querySelector('input');
+    if(input.value === '') {
+      setAnimate(true)
+      setTimeout(() => {
+        setAnimate(false)
+      }, 500);
+    }
+    input.value = '';
+    e.preventDefault();
+  }
 
   useEffect(() => {
+    setLoading(true);
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=${API_KEY}&lang=es`;
     // const url5Days = `https://api.openweathermap.org/data/2.5/forecast?q=${location}&units=metric&appid=${API_KEY}&lang=es`;
     
     axios.get(url).then(res => {
-      setData(res.data);
+      setTimeout(() => {
+        setData(res.data);
+        setLoading(false)
+      }, 1500);
+    }).catch(err => {
+      setLoading(false);
+      setErrorMsg(err)
     })
   }, [location])
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setErrorMsg('')
+    }, 2000);
+    return () => clearTimeout(timer)
+  }, [errorMsg])
   
-  console.log('DATOS: ', data);
 
   if(!data) {
-    return <div>
+    return (
+    <div className="w-full h-screen bg-gradientBg bg-no-repeat bg-cover bg-center flex flex-col justify-center items-center">
       <div>
-        <ImSpinner8 className='text-5x1 animate-spin'/>
+        <ImSpinner8 className='text-5xl animate-spin text-white'/>
       </div>
-    </div>
+    </div>)
   }
 
   let icon;
@@ -83,17 +119,22 @@ const App = () => {
 
   return (
     <div className="w-full h-screen bg-gradientBg bg-no-repeat bg-cover bg-center flex flex-col items-center justify-center px-4 lg:px-0">
+    {errorMsg && <div className="w-full max-w-[90vw] lg:max-w-[450px] bg-red-400 text-white absolute top-2 lg:top-10 p-4 capitalize rounded-md">{`${errorMsg.response.data.message}`}</div> }
     {/* //FORM */}
-      <form className="h-16 bg-black/30 w-full max-w-[450px] rounded-full back-blur-[32px] mb-7">
+      <form 
+      className={`${animate ? 'animate-shake' : 'animate-none'} h-16 bg-black/30 w-full max-w-[450px] rounded-full back-blur-[32px] mb-7`}>
         <div className="h-full relative flex items-center justify-between p-2">
-          <input className="flex-1 bg-transparent outline-none text-white text-[15px] font-light pl-5 h-full" type="text" placeholder='Busqueda de ciudad' />
-          <button className="bg-[#E6C3A5] hover:bg-[#c9ab90] w-20 h-12 rounded-full flex justify-center items-center transition">
+          <input onChange={(e) => handleInput(e)} className="flex-1 bg-transparent outline-none text-white text-[15px] font-light pl-5 h-full" type="text" placeholder='Busqueda de ciudad' />
+          <button onClick={(e) => handleSubmit(e)}className="bg-[#E6C3A5] hover:bg-[#c9ab90] w-20 h-12 rounded-full flex justify-center items-center transition">
             <IoMdSearch className="text-2xl"/>
           </button>
         </div>
       </form>
       {/* CARD */}
       <div className="w-full bg-black/20 max-w-[450px] min-h-[584px] text-white backdrop-blur-[32px] rounded-[20px] py-12 px-6">
+        {loading ? (
+          <div className="w-full h-full flex justify-center items-center"><ImSpinner8 className="text-white text-5xl animate-spin"/></div>
+          ) :        
         <div>
           {/* card top */}
           <div className="flex items-center gap-x-5">
@@ -145,6 +186,7 @@ const App = () => {
             </div>
           </div>
         </div>
+        }
       </div>
     </div>
   )
