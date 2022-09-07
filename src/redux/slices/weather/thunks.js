@@ -1,8 +1,5 @@
-// import { pokemonApi } from '../../../api/pokemonApi';
-import { forecastWeekdays } from '../../../api';
-import {
-  config, OPEN_WEATHER_MAP_API_KEY
-} from '../../../constants/apiKeys';
+import { forecastWeekdays } from '../../../utils';
+import { config } from '../../../constants/apiKeys';
 import {
   setWeather,
   startLoadingWeather

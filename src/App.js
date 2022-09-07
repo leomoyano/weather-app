@@ -1,4 +1,4 @@
-import axios, { Axios } from 'axios';
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -28,6 +28,8 @@ import SearchLocation from './components/SearchLocation';
 import { config } from './constants/apiKeys';
 import Card from './components/Card';
 import { getWeather } from './redux/slices/weather';
+import CardLocationSelected from './components/CardLocationSelected';
+import CarouselLocation from './components/CarouselLocation';
 
 const API_KEY = '74f6a0a9b04a89362c947cfc1ed58015'
 
@@ -128,7 +130,9 @@ const App = () => {
         {/* //FORM */}
         <SearchLocation />
         {/* CARD */}
-          <Card loading={loading} />
+        <Card loading={loading} />
+        {/* Location Selected */}
+        <CarouselLocation />
       </Layout>
     </>
   )

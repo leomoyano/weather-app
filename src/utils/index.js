@@ -1,3 +1,5 @@
+import { BsCloudDrizzleFill, BsCloudHaze2Fill } from "react-icons/bs";
+import { IoMdCloudy, IoMdRainy, IoMdSnow, IoMdSunny, IoMdThunderstorm } from "react-icons/io";
 import { config } from "../constants/apiKeys";
 
 export const forecastWeekdays = async (location) => {
@@ -36,4 +38,37 @@ export const forecastWeekdays = async (location) => {
   } catch (error) {
     console.log(error);
   }
+}
+
+export const iconWeather = (weatherState) => {
+  let icon; 
+  if(weatherState) {
+    switch (weatherState) {
+      case 'Clouds':
+        icon = <IoMdCloudy />
+        break;
+      case 'Haze':
+        icon = <BsCloudHaze2Fill />
+        break;
+      case 'Rain':
+        icon = <IoMdRainy />
+        break;
+      case 'Drizzle':
+        icon = <BsCloudDrizzleFill />
+        break;
+      case 'Clear':
+        icon = <IoMdSunny />
+        break;
+      case 'Snow':
+        icon = <IoMdSnow />
+        break;
+      case 'Thunderstorm':
+        icon = <IoMdThunderstorm />
+        break;
+
+      default:
+        break;
+    }
+  }
+  return icon;
 }

@@ -7,10 +7,10 @@ const ForecastDay = ({ day, minWeather, maxWeather }) => {
       <div className="text-[20px]">
         <FaAngleRight />
       </div>
-      <div className="justify-around w-full">
+      <div className="flex justify-between w-full">
         <span>{day}</span>
         <span className="ml-2">
-          Min {minWeather}° | Max {maxWeather}°
+          Min {parseInt(minWeather)}° | Max {parseInt(maxWeather)}°
         </span>
       </div>
     </div>

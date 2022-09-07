@@ -4,14 +4,18 @@ const initialState = {
     value: 10,
 }
 export const selectedLocationSlice = createSlice({
-    name:'selectedLocation',
-    initialState,
+    name: 'locationList',
+    initialState: {
+        locationList: [],
+        isLoading: false,
+        error: null,
+    },
     reducers:{
-        increment:(state)=>{
-            state.value += 1 
+        addLocation:(state, action)=>{
+            state.locationList.push(action.payload);
         },
-        decrement:(state)=>{
-            state.value -= 1 
+        removeLocation:(state)=>{
+            // state.locationList.slice();
         },
         incrementBy:(state, action) => { 
             state.value += action.payload 
@@ -20,9 +24,8 @@ export const selectedLocationSlice = createSlice({
         reset: (state) => {
             state.value = 0;
         },
-        
     }
 })
 
-export const {increment, decrement, incrementBy, reset} = selectedLocationSlice.actions;
+export const {addLocation, removeLocation, incrementBy, reset} = selectedLocationSlice.actions;
 export default selectedLocationSlice.reducer;
