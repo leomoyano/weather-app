@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { IoMdSearch } from 'react-icons/io';
+import { IoMdSearch} from 'react-icons/io';
+// import { changeWeather, errorData, fetchWeatherAction, pendingData } from '../redux/example/slices1/weatherSlices';
+import { useDispatch } from 'react-redux';
+import { getWeather, startLoadingWeather } from '../redux/slices/weather';
 
 const SearchLocation = () => {
     const [animate, setAnimate] = useState(false);
     const [inputValue, setInputValue] = useState('');
-    const [location, setLocation] = useState('Tucuman');
+    const [location, setLocation] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
+
+    const dispatch = useDispatch();
 
     const handleInput = (e) => {
         setInputValue(e.target.value)
@@ -13,8 +18,24 @@ const SearchLocation = () => {
 
     const handleSubmit = (e) => {
         if(inputValue) {
-          setLocation(inputValue);
+          dispatch(startLoadingWeather());
+          dispatch(getWeather(inputValue));
+          // const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=${OPEN_WEATHER_MAP_API_KEY}&lang=es`;
+          // console.log('INPUT VALUE: ', inputValue)
+          // axios.get(url).then(res => {
+          //   console.log('DATA AXIOS: ', res);
+          //   setTimeout(() => {
+          //     // setData(res.data);
+          //     // dispatch(changeWeather(res))
+          //     // setLoading(false)
+          //   }, 1500);
+          // }).catch(err => {
+          //   // dispatch(errorData(err));
+          //   // setLoading(false);
+          //   setErrorMsg(err)
+          // })
         }
+
         const input = document.querySelector('input');
         if(input.value === '') {
           setAnimate(true)
@@ -31,7 +52,7 @@ const SearchLocation = () => {
           setErrorMsg('')
         }, 2000);
         return () => clearTimeout(timer)
-      }, [errorMsg])
+      }, [errorMsg])      
 
   return (
     <form 
