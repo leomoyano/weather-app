@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { IoMdSearch} from 'react-icons/io';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { config } from '../constants/apiKeys';
-import { errorMessage } from '../redux/slices/selectedLocation';
 import { getWeather, startLoadingWeather } from '../redux/slices/weather';
 
 const SearchLocation = () => {
