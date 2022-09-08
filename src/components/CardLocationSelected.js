@@ -25,7 +25,7 @@ const dispatch = useDispatch();
           <div className="flex w-full justify-around items-center gap-x-4 after:animate-spin">
             <div className="text-[55px]">{iconWeather(data.weather[0].main)}</div>
             <div>
-              <div className="text-2md font-semibold">
+              <div className="text-2md text-2md max-w-[170px] font-semibold text-ellipsis overflow-hidden">
                 {data?.location}, {data?.country}
               </div>
               <div>
