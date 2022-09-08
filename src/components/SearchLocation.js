@@ -2,8 +2,9 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { IoMdSearch} from 'react-icons/io';
 // import { changeWeather, errorData, fetchWeatherAction, pendingData } from '../redux/example/slices1/weatherSlices';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { config } from '../constants/apiKeys';
+import { errorMessage } from '../redux/slices/selectedLocation';
 import { getWeather, startLoadingWeather } from '../redux/slices/weather';
 
 const SearchLocation = () => {
@@ -13,6 +14,7 @@ const SearchLocation = () => {
     const [errorMsg, setErrorMsg] = useState('');
 
     const dispatch = useDispatch();
+    const state = useSelector((state) => state);
 
     const handleInput = (e) => {
         setInputValue(e.target.value)
@@ -51,10 +53,11 @@ const SearchLocation = () => {
 
       useEffect(() => {
         const timer = setTimeout(() => {
+          // dispatch(errorMessage(''))
           setErrorMsg('')
         }, 2000);
         return () => clearTimeout(timer)
-      }, [errorMsg])
+      }, [state.selectLocation.errorMsg])
 
 
       useEffect(() => {

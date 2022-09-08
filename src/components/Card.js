@@ -10,10 +10,6 @@ const Card = (loading) => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
 
-  // useEffect(() => {
-  //   // dispatch(startLoadingWeather());
-  // }, []);
-
   useEffect(() => {
     console.log('Loading: ',  state);
   }, [])

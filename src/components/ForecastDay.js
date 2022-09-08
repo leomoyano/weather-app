@@ -3,7 +3,7 @@ import { FaAngleRight } from "react-icons/fa";
 
 const ForecastDay = ({ day, minWeather, maxWeather }) => {
   return (
-    <div className="flex items-center gap-x-2">
+    <div className="flex py-2 items-center gap-x-2">
       <div className="text-[20px]">
         <FaAngleRight />
       </div>

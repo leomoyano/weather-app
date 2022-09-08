@@ -95,7 +95,7 @@ const { locationList } = useSelector(state => state?.selectLocation);
               locationList.length === 0 ? (
                <hr />
               ) : (
-                  <div className="relative flex items-center">
+                  <div className="relative w-full justify-center flex items-center">
                       <FaChevronLeft
                           className="opacity-50 cursor-pointer hover:opacity-100"
                           onClick={slideLeft}

@@ -11,10 +11,6 @@ export const getWeather = (location) => {
 
       const forecastGrouped = await forecastWeekdays(location)
 
-      // const resp3 = await fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=33.44&lon=-94.04&exclude=hourly,daily&appid=${OPEN_WEATHER_MAP_API_KEY}q=${location}&units=metric&lang=es`);
-      //  const data3 = await resp3.json();
-      //  console.log("🚀 ~ file: thunks.js ~ line 31 ~ return ~ data3", data3)
-
       dispatch(setWeather({
         weather,
         main,

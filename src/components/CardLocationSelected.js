@@ -18,18 +18,18 @@ const dispatch = useDispatch();
   }
 
   return (
-    <div className="bg-black/20 min-h-[100px] mt-2 text-white backdrop-blur-[32px] rounded-[20px] py-8 px-6">
+    <div className="bg-black/20 min-h-[100px] min-w-[285px] lg:min-w-[320px] mt-2 text-white backdrop-blur-[32px] rounded-[20px] mx-2 py-4 px-3">
       {!data ? (
         <h1>No hay nada</h1>
       ) : (
         <div>
           {/* card top */}
-          <div className="flex justify-around items-center gap-x-5">
+          <div className="flex w-full justify-around items-center gap-x-5">
             {/* icon */}
             <div className="text-[80px]">{iconWeather(data.weather[0].main)}</div>
             <div>
               {/* country name */}
-              <div className="text-2xl font-semibold">
+              <div className="text-2md font-semibold">
                 {data?.location}, {data?.country}
               </div>
               {/* date */}
@@ -44,7 +44,7 @@ const dispatch = useDispatch();
             </div>
           </div>
           {/* card body */}
-          <div className="my-7">
+          <div className="my-3">
             <div className="flex justify-center items-center">
               {/* temperatura */}
               <div className="text-[100px] leading-none font-light">
