@@ -5,7 +5,7 @@ export const selectedLocationSlice = createSlice({
     initialState: {
         locationList: [],
         isLoading: false,
-        errorMsg: null,
+        errorMsg: '',
     },
     reducers:{
         addLocation:(state, action)=>{
@@ -16,7 +16,8 @@ export const selectedLocationSlice = createSlice({
             state.locationList = state.locationList.filter((location) => location.id !== locationName)
         },
         errorMessage:(state, action)=>{
-            state.errorMsg = action.payload.errorMsg;
+            state.errorMsg = action.payload;
+            state.isLoading = false;
         },
     }
 })

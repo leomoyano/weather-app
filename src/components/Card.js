@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { ImSpinner8 } from "react-icons/im";
 import { TbTemperatureCelsius } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,35 +6,28 @@ import { addLocation, errorMessage } from "../redux/slices/selectedLocation";
 import { iconWeather } from "../utils";
 import Forecast from "./Forecast";
 
-const Card = (loading) => {
+const Card = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
-
-  useEffect(() => {
-    console.log('Loading: ',  state);
-  }, [])
 
   const handleAddLocation = (state) => {
     const locationList = state.selectLocation.locationList;
     const { id, location, country, weather, main } = state.weatherLocation;
 
-    if(locationList.length > 5) {
-      console.error('Superó el limite')
+    if(locationList.length >= 5) {
+      dispatch(errorMessage('Solo puedes elegir cinco ciudades'))
       return 
     };
 
    for( let location of state?.selectLocation.locationList) {
       if(location.id === id) {
-       console.error('ESTA REPETIDO');
-       dispatch(errorMessage('Esta repetido'))
+       dispatch(errorMessage('La ciudad ya fue elegida'))
        return
       }
    }
     dispatch(addLocation({id, location, country, weather, main }))
-    console.log('Loading: ',  state);
   }
 
-  //objeto date
   const date = new Date();
 
   return (
@@ -45,19 +38,15 @@ const Card = (loading) => {
         </div>
       ) : (
         <div>
-          {/* card top */}
           <div className="flex items-center gap-x-5">
-            {/* icon */}
             <div className="text-[80px]">{iconWeather(state.weatherLocation.weather[0]?.main)}</div>
             <div>
-              {/* country name */}
               <div className="text-2xl font-semibold">
                 {state.weatherLocation.location},{" "}
                 {state.weatherLocation.country}
               </div>
-              {/* date */}
-              <div>
-                {date.getUTCDate()}/{date.getUTCMonth()}/{date.getUTCFullYear()}
+              <div className="italic">
+                {date.getUTCDate()}/{date.getUTCMonth() + 1}/{date.getUTCFullYear()}
               </div>
               <div>
                 <button className="bg-green-600/80 rounded-lg p-2 my-1" onClick={() => handleAddLocation(state)}>
@@ -66,25 +55,19 @@ const Card = (loading) => {
               </div>
             </div>
           </div>
-          {/* card body */}
           <div className="my-7">
             <div className="flex justify-center items-center">
-              {/* temperatura */}
               <div className="text-[130px] leading-none font-light">
                 {parseInt(state.weatherLocation.main.temp)}
               </div>
-              {/* Icono Celcius */}
               <div className="text-[35px]">
                 <TbTemperatureCelsius />
               </div>
             </div>
-            {/* descripcion clima */}
             <div className="capitalize text-center">
               {state.weatherLocation.weather[0]?.description}
             </div>
           </div>
-          {/* card bottom */}
-
           <Forecast />
         </div>
       )}

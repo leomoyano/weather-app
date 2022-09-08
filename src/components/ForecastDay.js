@@ -9,8 +9,8 @@ const ForecastDay = ({ day, minWeather, maxWeather }) => {
       </div>
       <div className="flex justify-between w-full">
         <span>{day}</span>
-        <span className="ml-2">
-          Min {parseInt(minWeather)}° | Max {parseInt(maxWeather)}°
+        <span className="ml-2 font-light">
+          Min {parseInt(minWeather)}° / Max {parseInt(maxWeather)}°
         </span>
       </div>
     </div>

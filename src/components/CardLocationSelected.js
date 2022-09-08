@@ -18,15 +18,17 @@ const dispatch = useDispatch();
   }
 
   return (
-    <div className="bg-black/20 min-h-[100px] min-w-[285px] lg:min-w-[320px] mt-2 text-white backdrop-blur-[32px] rounded-[20px] mx-2 py-4 px-3">
-      {!data ? (
-        <h1>No hay nada</h1>
+    <div className="bg-black/20 min-h-[100px] min-w-[283px] lg:min-w-[320px] mt-2 text-white backdrop-blur-[32px] rounded-[20px] mx-1 py-4 px-1">
+      {data.length === 0 ? (
+        <div className="flex w-full justify-center items-center min-h-[170px]">
+          <h1 className="text-[20px] font-normal">Agregue una ciudad</h1>
+        </div>
       ) : (
         <div>
           {/* card top */}
-          <div className="flex w-full justify-around items-center gap-x-5">
+          <div className="flex w-full justify-around items-center gap-x-4">
             {/* icon */}
-            <div className="text-[80px]">{iconWeather(data.weather[0].main)}</div>
+            <div className="text-[55px]">{iconWeather(data.weather[0].main)}</div>
             <div>
               {/* country name */}
               <div className="text-2md font-semibold">
@@ -34,7 +36,7 @@ const dispatch = useDispatch();
               </div>
               {/* date */}
               <div>
-                {date.getUTCDate()}/{date.getUTCMonth()}/{date.getUTCFullYear()}
+                {date.getUTCDate()}/{date.getUTCMonth() + 1}/{date.getUTCFullYear()}
               </div>
             </div>
             <div>

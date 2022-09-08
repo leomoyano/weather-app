@@ -1,16 +1,21 @@
 import { forecastWeekdays } from '../../../utils';
 import { config } from '../../../constants/apiKeys';
-import { setWeather } from './weatherSlice';
+import { setWeather, stopLoadingWeather } from './weatherSlice';
+import { errorMessage } from '../selectedLocation';
 
 export const getWeather = (location) => {
   return async (dispatch) => {
 
     try {
-      const resp = await fetch(`${config.WEATHER_API_ENDPOINT}q=${location}&units=metric&lang=es`);
+      const resp = await fetch(`${config.WEATHER_API_ENDPOINT}q=${location}&units=metric&lang=es`)
       const { weather, name, main, sys, id } = await resp.json();
 
       const forecastGrouped = await forecastWeekdays(location)
-
+      if(resp.status === 404) {
+        dispatch(errorMessage('Ciudad no encontrada'));
+        dispatch(stopLoadingWeather());
+        return;
+      }
       dispatch(setWeather({
         weather,
         main,
@@ -29,8 +34,8 @@ export const getWeather = (location) => {
         maxTemp5: forecastGrouped?.[4].maxTemp,
       }));
     } catch (error) {
-      // dispatch(errorData(error));
-      console.log(error);
+      // dispatch(errorMessage(error));
+      console.log('EEERPPR THUNKS: ', error);
     }
   }
 }

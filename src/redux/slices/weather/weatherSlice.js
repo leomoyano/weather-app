@@ -21,8 +21,11 @@ export const weatherSlice = createSlice({
     isLoading: false,
   },
   reducers: {
-    startLoadingWeather: (state, /* action */ ) => {
+    startLoadingWeather: ( state ) => {
       state.isLoading = true;
+    },
+    stopLoadingWeather: ( state ) => {
+      state.isLoading = false;
     },
     setWeather: ( state, action ) => {
       state.isLoading = false;
@@ -45,5 +48,5 @@ export const weatherSlice = createSlice({
   }
 });
 // Actiones generadas para cada caso del reducer
-export const { startLoadingWeather, setWeather } = weatherSlice.actions;
+export const { startLoadingWeather, stopLoadingWeather, setWeather } = weatherSlice.actions;
 export default weatherSlice.reducer;
