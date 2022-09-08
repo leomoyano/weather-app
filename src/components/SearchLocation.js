@@ -38,9 +38,11 @@ const SearchLocation = () => {
         const urlIpApi = config.IP_API_ENDPOINT
         axios.get(urlIpApi).then(res => {
           dispatch(getWeather(res.data.city));
+          return;
         }).catch(err => {
           console.log(err);
         })
+        dispatch(getWeather('buenos aires'));
       }, []);
       
 
