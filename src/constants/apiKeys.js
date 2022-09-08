@@ -6,5 +6,5 @@ export const config = {
   WEATHER_DATA_ENDPOINT: `https://api.openweathermap.org/data/2.5/onecall?appid=${OPEN_WEATHER_MAP_API_KEY}&exclude=minutely&units=metric&`,
   WEATHER_DATA_FORECAST: `https://api.openweathermap.org/data/2.5/forecast?appid=${OPEN_WEATHER_MAP_API_KEY}&units=metric&`,
   WEATHER_DATA_ONECALL: `https://api.openweathermap.org/data/3.0/onecall?appid=${OPEN_WEATHER_MAP_API_KEY}&units=metric&`,
-  IP_API_ENDPOINT: `https://api.ipapi.com/?access_key=${REACT_APP_IP_API_KEY}`
+  IP_API_ENDPOINT: `http://api.ipapi.com/api/check?access_key=${REACT_APP_IP_API_KEY}`
 };

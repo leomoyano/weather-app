@@ -2,39 +2,18 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import {
-  IoMdSunny,
-  IoMdRainy,
-  IoMdCloudy,
-  IoMdSnow,
-  IoMdThunderstorm,
-  IoMdSearch
-} from 'react-icons/io';
-
-import {
-  BsCloudHaze2Fill,
-  BsCloudDrizzleFill,
-  BsEye,
-  BsWater,
-  BsThermometer,
-  BsWind
-} from 'react-icons/bs'
-
-import { TbTemperatureCelsius } from 'react-icons/tb'
 import { ImSpinner8 } from 'react-icons/im'
-import { parse } from 'postcss';
 import Layout from './components/Layout';
-import SearchLocation from './components/SearchLocation';
-import { config } from './constants/apiKeys';
 import Card from './components/Card';
 import { getWeather } from './redux/slices/weather';
-import CardLocationSelected from './components/CardLocationSelected';
 import CarouselLocation from './components/CarouselLocation';
+import SearchLocation from './components/SearchLocation';
+import { config } from './constants/apiKeys';
+import { errorMessage } from './redux/slices/selectedLocation';
 
 const API_KEY = '74f6a0a9b04a89362c947cfc1ed58015'
 
 const App = () => {
-  const [data, setData] = useState(null);
   const [location, setLocation] = useState('Tucuman');
   const [inputValue, setInputValue] = useState('');
   const [animate, setAnimate] = useState(false);
@@ -88,30 +67,12 @@ const App = () => {
   //   })
   // }, [location])
 
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setErrorMsg('')
-  //   }, 2000);
-  //   return () => clearTimeout(timer)
-  // }, [errorMsg])
-
   useEffect(() => {
-    // dispatch(startLoadingWeather());
-    dispatch(getWeather('barcelona'));
-    setLoading(state?.weatherLocation.isLoading);
-  }, []);
-
-  useEffect(() => {
-    // console.log('dasdasdasdasds: ',config.IP_API_ENDPOINT);
-    // const urlIpApi = config.IP_API_ENDPOINT
-    // axios.get(urlIpApi).then(res => {
-    //   console.log('API IP: ', res)
-    // })
-    console.log('====================================');
-    console.log('DATA AppJs: ', state);
-    // console.log('DATA AppJs isLoadings: ', state?.weatherLocation.isLoading);
-    console.log('====================================');
-  }, [state])
+    const timer = setTimeout(() => {
+      setErrorMsg('')
+    }, 2000);
+    return () => clearTimeout(timer)
+  }, [errorMsg])
 
 
   if (!state?.weatherLocation) {
@@ -126,7 +87,7 @@ const App = () => {
   return (
     <>
       <Layout>
-        {/* {errorMsg && <div className="w-full max-w-[90vw] lg:max-w-[450px] bg-red-400 text-white absolute top-2 lg:top-10 p-4 capitalize rounded-md">{`${errorMsg.response.data.message}`}</div> } */}
+        {errorMsg && <div className="w-full max-w-[90vw] lg:max-w-[450px] bg-red-400 text-white absolute top-2 lg:top-10 p-4 capitalize rounded-md">{`${errorMsg.response.data.message}`}</div> }
         {/* //FORM */}
         <SearchLocation />
         {/* CARD */}

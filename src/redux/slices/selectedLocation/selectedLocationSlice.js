@@ -1,31 +1,25 @@
 import{createSlice} from '@reduxjs/toolkit'
 
-const initialState = {
-    value: 10,
-}
 export const selectedLocationSlice = createSlice({
     name: 'locationList',
     initialState: {
         locationList: [],
         isLoading: false,
-        error: null,
+        errorMsg: null,
     },
     reducers:{
         addLocation:(state, action)=>{
             state.locationList.push(action.payload);
         },
-        removeLocation:(state)=>{
-            // state.locationList.slice();
+        removeLocation:(state, action)=>{
+            const locationName = action.payload;
+            state.locationList = state.locationList.filter((location) => location.id !== locationName)
         },
-        incrementBy:(state, action) => { 
-            state.value += action.payload 
-        },
-        
-        reset: (state) => {
-            state.value = 0;
+        errorMessage:(state, action)=>{
+            state.errorMsg = action.payload.errorMsg;
         },
     }
 })
 
-export const {addLocation, removeLocation, incrementBy, reset} = selectedLocationSlice.actions;
+export const { addLocation, removeLocation, errorMessage } = selectedLocationSlice.actions;
 export default selectedLocationSlice.reducer;

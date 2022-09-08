@@ -1,7 +1,9 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { IoMdSearch} from 'react-icons/io';
 // import { changeWeather, errorData, fetchWeatherAction, pendingData } from '../redux/example/slices1/weatherSlices';
 import { useDispatch } from 'react-redux';
+import { config } from '../constants/apiKeys';
 import { getWeather, startLoadingWeather } from '../redux/slices/weather';
 
 const SearchLocation = () => {
@@ -52,11 +54,23 @@ const SearchLocation = () => {
           setErrorMsg('')
         }, 2000);
         return () => clearTimeout(timer)
-      }, [errorMsg])      
+      }, [errorMsg])
+
+
+      useEffect(() => {
+        dispatch(startLoadingWeather());
+        const urlIpApi = config.IP_API_ENDPOINT
+        axios.get(urlIpApi).then(res => {
+          dispatch(getWeather(res.data.city));
+        }).catch(err => {
+          console.log(err);
+        })
+      }, []);
+      
 
   return (
     <form 
-      className={`${animate ? 'animate-shake' : 'animate-none'} mt-2 h-16 bg-black/30 w-full max-w-[450px] rounded-full back-blur-[32px] mb-7`}>
+      className={`${animate ? 'animate-shake' : 'animate-none'} h-16 bg-black/30 w-full max-w-[450px] rounded-full back-blur-[32px] mb-7`}>
         <div className="h-full relative flex items-center justify-between p-2">
           <input onChange={(e) => handleInput(e)} className="flex-1 bg-transparent outline-none text-white text-[15px] font-light pl-5 h-full" type="text" placeholder='Busqueda de ciudad' />
           <button onClick={(e) => handleSubmit(e)}className="bg-[#E6C3A5] hover:bg-[#c9ab90] w-20 h-12 rounded-full flex justify-center items-center transition">
@@ -67,4 +81,4 @@ const SearchLocation = () => {
   )
 }
 
-export default SearchLocation
+export default SearchLocation;

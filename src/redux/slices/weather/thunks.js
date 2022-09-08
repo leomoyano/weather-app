@@ -1,13 +1,9 @@
 import { forecastWeekdays } from '../../../utils';
 import { config } from '../../../constants/apiKeys';
-import {
-  setWeather,
-  startLoadingWeather
-} from './weatherSlice';
+import { setWeather } from './weatherSlice';
 
 export const getWeather = (location) => {
-  return async (dispatch, getState) => {
-    dispatch(startLoadingWeather());
+  return async (dispatch) => {
 
     try {
       const resp = await fetch(`${config.WEATHER_API_ENDPOINT}q=${location}&units=metric&lang=es`);
@@ -37,6 +33,7 @@ export const getWeather = (location) => {
         maxTemp5: forecastGrouped?.[4].maxTemp,
       }));
     } catch (error) {
+      // dispatch(errorData(error));
       console.log(error);
     }
   }

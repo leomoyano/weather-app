@@ -103,10 +103,10 @@ const { locationList } = useSelector(state => state?.selectLocation);
                       />
                       <div
                           id="slider"
-                          className="max-w-[450px] overflow-x-hidden flex flex-row lg:flex-row md:flex-row sm:flex-column h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide"
+                          className="max-w-[450px] overflow-x-hidden flex flex-row lg:flex-row md:flex-row sm:flex-column h-full scroll whitespace-nowrap scroll-smooth scrollbar-hide"
                       >
                           {locationList.map((item) => (
-                              <CardLocationSelected data={item} />
+                              <CardLocationSelected key={item.id} data={item} />
                           ))}
 
                       </div>

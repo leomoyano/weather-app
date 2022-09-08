@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { BsCloudDrizzleFill, BsCloudHaze2Fill, BsEye, BsThermometer, BsWater, BsWind } from "react-icons/bs";
+import React, { useEffect } from "react";
 import { ImSpinner8 } from "react-icons/im";
-import { IoMdCloudy, IoMdRainy, IoMdSnow, IoMdSunny, IoMdThunderstorm } from "react-icons/io";
 import { TbTemperatureCelsius } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
-import { addLocation } from "../redux/slices/selectedLocation";
-import { getWeather } from "../redux/slices/weather";
+import { addLocation, errorMessage } from "../redux/slices/selectedLocation";
 import { iconWeather } from "../utils";
 import Forecast from "./Forecast";
 
@@ -22,12 +19,21 @@ const Card = (loading) => {
   }, [])
 
   const handleAddLocation = (state) => {
-    const lengthLists = state.selectLocation.locationList.length;
+    const locationList = state.selectLocation.locationList;
     const { id, location, country, weather, main } = state.weatherLocation;
-    if(lengthLists > 5) {
+
+    if(locationList.length > 5) {
       console.error('Superó el limite')
       return 
     };
+
+   for( let location of state?.selectLocation.locationList) {
+      if(location.id === id) {
+       console.error('ESTA REPETIDO');
+       dispatch(errorMessage('Esta repetido'))
+       return
+      }
+   }
     dispatch(addLocation({id, location, country, weather, main }))
     console.log('Loading: ',  state);
   }

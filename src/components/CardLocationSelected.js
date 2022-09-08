@@ -3,17 +3,19 @@ import { BsEye, BsThermometer, BsWater, BsWind } from 'react-icons/bs'
 import { FaChevronLeft, FaChevronRight, FaRegTimesCircle } from 'react-icons/fa'
 import { ImSpinner8 } from 'react-icons/im'
 import { TbTemperatureCelsius } from 'react-icons/tb'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { removeLocation } from '../redux/slices/selectedLocation'
 import { iconWeather } from '../utils'
 
 const CardLocationSelected = ({data}) => {
-
-  console.log('====================================');
-  console.log('DAAATA: ', data.weather[0].main);
-  console.log('====================================');
+const dispatch = useDispatch();
 
   //objeto date
   const date = new Date();
+
+  const handleRemove = (e) => {
+    dispatch(removeLocation(e))
+  }
 
   return (
     <div className="bg-black/20 min-h-[100px] mt-2 text-white backdrop-blur-[32px] rounded-[20px] py-8 px-6">
@@ -36,7 +38,7 @@ const CardLocationSelected = ({data}) => {
               </div>
             </div>
             <div>
-              <button className="bg-black/20 rounded-[40px]">
+              <button name={data?.location} onClick={() => handleRemove(data?.id)} className="bg-black/20 rounded-[40px]">
                 <FaRegTimesCircle className="text-xl" />
               </button>
             </div>
